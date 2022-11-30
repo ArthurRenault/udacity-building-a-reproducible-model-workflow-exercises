@@ -33,6 +33,7 @@ def go(args):
     # Extract the target from the features
     logger.info("Extracting target from dataframe")
     X = df.copy()
+    X.dropna(inplace=True, subset=['genre'])
     y = X.pop("genre")
 
     logger.info("Splitting train/val")
