@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 
@@ -23,4 +23,8 @@ def get_item(item_id: int, item_name: str = 'na', count: int = 1) -> dict:
 
 @app.post('/items/')
 def set_item(item: Item):
+    if item.item_id <= 0:
+        raise HTTPException(status_code=422, detail="item_id must be strictly greater than 0.")
+    if len(item.item_name) > 100:
+        raise HTTPException(status_code=422, detail="item_name must have less than 100 chars.")
     return {"item_id": item.item_id, "item_name": item.item_name}

@@ -1,3 +1,5 @@
+import pytest
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from main_fastapi import app
 
@@ -35,3 +37,13 @@ def test_post_data_dump():
     assert r.status_code == 200
     assert r.json()["item_id"] == 1234
     assert r.json()["item_name"] == 'na'
+
+
+def test_post_invalid_id():
+    r = client.post("http://127.0.0.1:8000/items/", json={"item_id": 0})
+    assert r.status_code == 422
+
+
+def test_post_invalid_name():
+    r = client.post("http://127.0.0.1:8000/items/", json={"item_id": 1, "item_name": "abc"*100})
+    assert r.status_code == 422
