@@ -1,4 +1,3 @@
-import json
 from fastapi.testclient import TestClient
 from main_fastapi import app
 
@@ -31,7 +30,7 @@ def test_post():
 
 
 def test_post_data_dump():
-    r = client.post("http://127.0.0.1:8000/items/1", json={"item_id": 1234})
+    r = client.post("http://127.0.0.1:8000/items/", json={"item_id": 1234})
     print(r.json())
     assert r.status_code == 200
     assert r.json()["item_id"] == 1234

@@ -21,6 +21,6 @@ def get_item(item_id: int, item_name: str = 'na', count: int = 1) -> dict:
     return {"item_id": item_id, "item_name": item_name, "count": count, "foo": "bar"}
 
 
-@app.post('/items/{item_id}')
+@app.post('/items/')
 def set_item(item: Item):
     return {"item_id": item.item_id, "item_name": item.item_name}
